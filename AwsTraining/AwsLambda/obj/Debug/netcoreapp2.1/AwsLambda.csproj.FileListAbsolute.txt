@@ -1,0 +1,4 @@
+C:\Users\mbalda\Source\Repos\awstraining\AwsTraining\AwsLambda\obj\Debug\netcoreapp2.1\AwsLambda.csprojAssemblyReference.cache
+C:\Users\mbalda\Source\Repos\awstraining\AwsTraining\AwsLambda\obj\Debug\netcoreapp2.1\AwsLambda.csproj.CoreCompileInputs.cache
+C:\Users\mbalda\Source\Repos\awstraining\AwsTraining\AwsLambda\obj\Debug\netcoreapp2.1\AwsLambda.AssemblyInfoInputs.cache
+C:\Users\mbalda\Source\Repos\awstraining\AwsTraining\AwsLambda\obj\Debug\netcoreapp2.1\AwsLambda.AssemblyInfo.cs
