@@ -9,13 +9,11 @@ namespace BMICalculator.Tests
         [Fact]
         public void TestToUpperFunction()
         {
-
-            // Invoke the lambda function and confirm the string was upper cased.
             var function = new BMICalculator.Function();
             var context = new TestLambdaContext();
             var data = new InputData
             {
-                Height = 180,
+                Height = 182,
                 Weight = 90,
                 Age = 34
             };
