@@ -3,3 +3,9 @@
 ################################################################################
 
 /AwsTraining/.vs/AwsTraining
+/AwsTraining/AwsLambda/BMICalculator/obj/Debug/netcoreapp2.1
+/AwsTraining/AwsLambda/BMICalculator/obj
+/AwsTraining/AwsLambda/BMICalculator.Tests/bin/Debug/netcoreapp2.1
+/AwsTraining/AwsLambda/BMICalculator.Tests/obj
+/AwsTraining/AwsLambda/BMICalculator/bin/Debug/netcoreapp2.1
+/AwsTraining/old/AwsLambda

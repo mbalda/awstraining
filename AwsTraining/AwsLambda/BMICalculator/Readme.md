@@ -38,12 +38,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "AwsLambda/test/AwsLambda.Tests"
+    cd "BMICalculator/test/BMICalculator.Tests"
     dotnet test
 ```
 
 Deploy function to AWS Lambda
 ```
-    cd "AwsLambda/src/AwsLambda"
+    cd "BMICalculator/src/BMICalculator"
     dotnet lambda deploy-function
 ```

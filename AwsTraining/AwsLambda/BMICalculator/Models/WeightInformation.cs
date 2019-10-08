@@ -1,4 +1,4 @@
-﻿namespace AwsLambda.Models
+﻿namespace BMICalculator.Models
 {
     public enum WeightInformation
     {
