@@ -11,7 +11,7 @@ namespace BMICalculator
     public class Function
     {
         private readonly BodyMassIndexCalculator _calculator;
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public Function()
         {
@@ -20,7 +20,7 @@ namespace BMICalculator
         }
 
         /// <summary>
-        /// A simple function that takes a string and does a ToUpper
+        /// A simple function that calculates BMI for adult person
         /// </summary>
         /// <param name="input"></param>
         /// <param name="context"></param>
@@ -34,7 +34,16 @@ namespace BMICalculator
                 throw new ArgumentNullException(nameof(input), "Input data cannot be null.");
             }
 
-            return _calculator.Calculate(input.Height, input.Weight, input.Age);
+            try
+            {
+                return _calculator.Calculate(input.Height, input.Weight, input.Age);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogMessage(context, ex.Message);
+            }
+
+            return WeightInformation.NotCalculated;
         }
     }
 }

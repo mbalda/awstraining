@@ -7,6 +7,7 @@
         Normal,
         Overweight,
         Obesity,
-        ExtremeObesity
+        ExtremeObesity,
+        NotCalculated
     }
 }
