@@ -7,7 +7,7 @@ namespace BMICalculator.Tests
     public class FunctionTest
     {
         [Fact]
-        public void TestToUpperFunction()
+        public void FunctionIntegrationTest()
         {
             var function = new BMICalculator.Function();
             var context = new TestLambdaContext();
@@ -19,7 +19,7 @@ namespace BMICalculator.Tests
             };
             var result = function.FunctionHandler(data, context);
 
-            Assert.Equal(WeightInformation.Obesity, result);
+            Assert.Equal(CalculationDescription.Obesity, result.Description);
         }
     }
 }

@@ -10,13 +10,15 @@ namespace BMICalculator
 {
     public class Function
     {
-        private readonly BodyMassIndexCalculator _calculator;
+        private readonly ICalculator _calculator;
         private readonly ILogger _logger;
+        private readonly IStore _store;
 
         public Function()
         {
             _calculator = new BodyMassIndexCalculator();
             _logger = new CloudWatchLogger();
+            _store = new DynamoDbStoreService();
         }
 
         /// <summary>
@@ -25,8 +27,10 @@ namespace BMICalculator
         /// <param name="input"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public WeightInformation FunctionHandler(InputData input, ILambdaContext context)
+        public CalculationResult FunctionHandler(InputData input, ILambdaContext context)
         {
+            CalculationResult result = null;
+
             if (input == null)
             {
                 _logger.LogMessage(context, "Input data cannot be null.");
@@ -36,14 +40,34 @@ namespace BMICalculator
 
             try
             {
-                return _calculator.Calculate(input.Height, input.Weight, input.Age);
+                result = _calculator.Calculate(input.Height, input.Weight, input.Age);
+                SaveInformations(input, result);
             }
             catch (Exception ex)
             {
                 _logger.LogMessage(context, ex.Message);
             }
 
-            return WeightInformation.NotCalculated;
+            return result ?? new CalculationResult
+            {
+                Description = CalculationDescription.NotCalculated
+            };
+        }
+
+        private void SaveInformations(InputData input, CalculationResult result)
+        {
+            CalculationItem item = new CalculationItem
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = input.Name,
+                Age = input.Age,
+                Height = input.Height,
+                Weight = input.Weight,
+                BMI = result.BMI,
+                Description = result.Description.ToString()
+            };
+
+            _store.StoreAsync(item);
         }
     }
 }

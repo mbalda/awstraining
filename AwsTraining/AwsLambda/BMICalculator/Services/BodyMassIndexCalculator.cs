@@ -3,29 +3,36 @@ using System;
 
 namespace BMICalculator.Services
 {
-    public class BodyMassIndexCalculator
+    public class BodyMassIndexCalculator : ICalculator
     {
-        public WeightInformation Calculate(byte height, double mass, byte age)
+        public CalculationResult Calculate(byte height, double mass, byte age)
         {
             if (age < 18)
                 throw new Exception("BMI calculator can be used for people over 18.");
 
             var bmi = mass / Math.Pow(height / 100d, 2);
-            return GetIndicationForAdult(bmi);
+
+            return new CalculationResult
+            {
+                BMI = bmi,
+                Description = GetIndicationForAdult(bmi)
+            };
         }
 
-        private WeightInformation GetIndicationForAdult(double bmi)
+        private CalculationDescription GetIndicationForAdult(double bmi)
         {
             if (bmi <= 16)
-                return WeightInformation.ExtremeUnderweight;
+                return CalculationDescription.ExtremeUnderweight;
             if (bmi > 16 && bmi <= 18.5)
-                return WeightInformation.Underweight;
+                return CalculationDescription.Underweight;
             if (bmi > 18.5 && bmi <= 25)
-                return WeightInformation.Normal;
+                return CalculationDescription.Normal;
             if (bmi > 25 && bmi <= 30)
-                return WeightInformation.Obesity;
+                return CalculationDescription.Overweight;
+            if (bmi > 30 && bmi <= 40)
+                return CalculationDescription.Overweight;
             else
-                return WeightInformation.ExtremeObesity;
+                return CalculationDescription.ExtremeObesity;
         }
     }
 }
