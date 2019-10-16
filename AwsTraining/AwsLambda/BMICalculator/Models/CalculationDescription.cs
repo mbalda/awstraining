@@ -1,6 +1,6 @@
 ﻿namespace BMICalculator.Models
 {
-    public enum WeightInformation
+    public enum CalculationDescription
     {
         ExtremeUnderweight,
         Underweight,
