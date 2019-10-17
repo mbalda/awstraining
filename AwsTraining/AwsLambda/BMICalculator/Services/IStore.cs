@@ -6,6 +6,6 @@ namespace BMICalculator.Services
     internal interface IStore
     {
         Task StoreAsync(CalculationItem item);
-        Task<CalculationItem> GetItemByIdAsync(int itemId);
+        Task<CalculationItem> GetItemByIdAsync(string itemId);
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using BMICalculator.Models;
 using BMICalculator.Services;
@@ -27,7 +29,7 @@ namespace BMICalculator
         /// <param name="input"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public CalculationResult FunctionHandler(InputData input, ILambdaContext context)
+        public CalculationResult CalculateBMIFunctionHandler(InputData input, ILambdaContext context)
         {
             CalculationResult result = null;
 
@@ -50,8 +52,26 @@ namespace BMICalculator
 
             return result ?? new CalculationResult
             {
-                Description = CalculationDescription.NotCalculated
+                Description = CalculationDescription.NotCalculated.ToString()
             };
+        }
+
+        public async Task<CalculationItem> GetCalculationByIdFunctionHandler(string id, ILambdaContext context)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                _logger.LogMessage(context, "Item Id cannot be null or empty string.");
+                return null;
+            }
+
+            var item = await _store.GetItemByIdAsync(id);
+
+            if (item != null)
+                _logger.LogMessage(context, item.ToString());
+            else 
+                _logger.LogMessage(context, $"Object with Id: {item.Id} has not been found.");
+
+            return item;
         }
 
         private void SaveInformations(InputData input, CalculationResult result)
@@ -63,7 +83,7 @@ namespace BMICalculator
                 Age = input.Age,
                 Height = input.Height,
                 Weight = input.Weight,
-                BMI = result.BMI,
+                BMI = Math.Round(result.BMI, 2),
                 Description = result.Description.ToString()
             };
 

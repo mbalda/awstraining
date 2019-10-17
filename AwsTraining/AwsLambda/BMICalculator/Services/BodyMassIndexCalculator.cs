@@ -15,7 +15,7 @@ namespace BMICalculator.Services
             return new CalculationResult
             {
                 BMI = bmi,
-                Description = GetIndicationForAdult(bmi)
+                Description = GetIndicationForAdult(bmi).ToString()
             };
         }
 
