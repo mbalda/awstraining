@@ -16,7 +16,7 @@ namespace BMICalculator.Services
             _context = new DynamoDBContext(_client);
         }
 
-        public async Task<CalculationItem> GetItemByIdAsync(int itemId)
+        public async Task<CalculationItem> GetItemByIdAsync(string itemId)
         {
             return await _context.LoadAsync<CalculationItem>(itemId);
         }
