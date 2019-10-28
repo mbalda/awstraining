@@ -9,7 +9,7 @@ namespace BMICalculator.Tests
         [Fact]
         public void FunctionIntegrationTest()
         {
-            var function = new BMICalculator.Function();
+            var function = new BMICalculator.CalculateBMIFunction();
             var context = new TestLambdaContext();
             var data = new InputData
             {
@@ -19,7 +19,7 @@ namespace BMICalculator.Tests
             };
             var result = function.FunctionHandler(data, context);
 
-            Assert.Equal(CalculationDescription.Obesity, result.Description);
+            Assert.Equal("", result.Body);
         }
     }
 }

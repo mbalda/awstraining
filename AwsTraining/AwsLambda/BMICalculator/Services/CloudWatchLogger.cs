@@ -4,9 +4,21 @@ namespace BMICalculator.Services
 {
     public class CloudWatchLogger : ILogger
     {
-        public void LogMessage(ILambdaContext ctx, string msg)
+        private ILambdaContext _context;
+
+        public CloudWatchLogger(ILambdaContext context)
         {
-            ctx.Logger.LogLine($"{ctx.AwsRequestId}::{ctx.FunctionName} : {msg}");
+            _context = context;
+        }
+
+        public void LogError(string message)
+        {
+            _context.Logger.LogLine($"ERROR: {_context.AwsRequestId}::{_context.FunctionName} : {message}");
+        }
+
+        public void LogMessage(string message)
+        {
+            _context.Logger.LogLine($"INFORMATION: {_context.AwsRequestId}::{_context.FunctionName} : {message}");
         }
     }
 }

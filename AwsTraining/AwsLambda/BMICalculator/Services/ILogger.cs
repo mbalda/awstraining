@@ -4,6 +4,7 @@ namespace BMICalculator.Services
 {
     public interface ILogger
     {
-        void LogMessage(ILambdaContext context, string message);
+        void LogMessage(string message);
+        void LogError(string message);
     }
 }
