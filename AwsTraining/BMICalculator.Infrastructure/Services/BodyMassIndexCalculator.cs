@@ -1,7 +1,7 @@
-﻿using BMICalculator.Models;
-using System;
+﻿using System;
+using BMICalculator.Domain.Models;
 
-namespace BMICalculator.Services
+namespace BMICalculator.Infrastructure.Services
 {
     public class BodyMassIndexCalculator : ICalculator
     {

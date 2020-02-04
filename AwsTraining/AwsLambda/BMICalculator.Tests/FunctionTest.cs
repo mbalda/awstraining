@@ -1,6 +1,6 @@
 using Xunit;
 using Amazon.Lambda.TestUtilities;
-using BMICalculator.Models;
+using BMICalculator.Domain.Models;
 
 namespace BMICalculator.Tests
 {

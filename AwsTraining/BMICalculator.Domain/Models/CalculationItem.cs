@@ -1,6 +1,6 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
 
-namespace BMICalculator.Models
+namespace BMICalculator.Domain.Models 
 {
     [DynamoDBTable("calculations")]
     public class CalculationItem

@@ -13,3 +13,7 @@
 /AwsTraining/AwsLambda/obj/Release/netcoreapp2.1
 /AwsTraining/AwsLambda/BMICalculator/bin/Release/netcoreapp2.1
 /AwsTraining/.cr/personal
+/AwsTraining/BMICalculator.Domain/obj
+/AwsTraining/BMICalculator.Infrastructure/bin/Debug/netcoreapp2.1
+/AwsTraining/BMICalculator.Infrastructure/obj
+/AwsTraining/BMICalculator.Domain/bin/Debug/netcoreapp2.1

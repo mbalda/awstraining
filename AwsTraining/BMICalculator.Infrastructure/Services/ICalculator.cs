@@ -1,6 +1,6 @@
-﻿using BMICalculator.Models;
+﻿using BMICalculator.Domain.Models;
 
-namespace BMICalculator.Services
+namespace BMICalculator.Infrastructure.Services
 {
     public interface ICalculator
     {

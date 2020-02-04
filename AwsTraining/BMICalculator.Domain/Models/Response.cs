@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
-namespace BMICalculator.Models
+namespace BMICalculator.Domain.Models
 {
     public class Response
     {

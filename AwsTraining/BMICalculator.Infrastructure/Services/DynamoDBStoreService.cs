@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using BMICalculator.Models;
+using BMICalculator.Domain.Models;
 
-namespace BMICalculator.Services
+namespace BMICalculator.Infrastructure.Services
 {
-    class DynamoDbStoreService : IStore
+    public class DynamoDbStoreService : IStore
     {
         private readonly AmazonDynamoDBClient _client;
         private readonly DynamoDBContext _context;

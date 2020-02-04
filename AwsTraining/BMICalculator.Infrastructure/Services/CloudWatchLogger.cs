@@ -1,10 +1,10 @@
 ﻿using Amazon.Lambda.Core;
 
-namespace BMICalculator.Services
+namespace BMICalculator.Infrastructure.Services
 {
     public class CloudWatchLogger : ILogger
     {
-        private ILambdaContext _context;
+        private readonly ILambdaContext _context;
 
         public CloudWatchLogger(ILambdaContext context)
         {

@@ -1,4 +1,4 @@
-﻿namespace BMICalculator.Models
+﻿namespace BMICalculator.Domain.Models
 {
     public class InputData
     {

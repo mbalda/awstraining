@@ -1,9 +1,9 @@
 using Amazon.Lambda.Core;
-using BMICalculator.Models;
-using BMICalculator.Services;
 using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Tasks;
+using BMICalculator.Domain.Models;
+using BMICalculator.Infrastructure.Services;
 
 namespace BMICalculator
 {

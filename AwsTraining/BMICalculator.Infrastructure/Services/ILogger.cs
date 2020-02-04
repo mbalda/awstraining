@@ -1,6 +1,4 @@
-﻿using Amazon.Lambda.Core;
-
-namespace BMICalculator.Services
+﻿namespace BMICalculator.Infrastructure.Services
 {
     public interface ILogger
     {
