@@ -17,3 +17,5 @@
 /AwsTraining/BMICalculator.Infrastructure/bin/Debug/netcoreapp2.1
 /AwsTraining/BMICalculator.Infrastructure/obj
 /AwsTraining/BMICalculator.Domain/bin/Debug/netcoreapp2.1
+/AwsTraining/BMICalculator.LambdaAndSaml/obj
+/AwsTraining/.vs/config
