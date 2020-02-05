@@ -1,6 +1,7 @@
 using Xunit;
 using Amazon.Lambda.TestUtilities;
 using BMICalculator.Domain.Models;
+using BMICalculator.Functions;
 
 namespace BMICalculator.Tests
 {
@@ -9,7 +10,7 @@ namespace BMICalculator.Tests
         [Fact]
         public void FunctionIntegrationTest()
         {
-            var function = new BMICalculator.CalculateBMIFunction();
+            var function = new CalculateBmiFunction();
             var context = new TestLambdaContext();
             var data = new InputData
             {

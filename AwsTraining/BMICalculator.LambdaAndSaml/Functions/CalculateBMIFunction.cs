@@ -5,15 +5,15 @@ using BMICalculator.Domain.Models;
 using BMICalculator.Infrastructure.Services;
 using Newtonsoft.Json;
 
-namespace BMICalculator.Functions
+namespace BMICalculator
 {
-    public class CalculateBmiFunction
+    public class CalculateBMIFunction
     {
         private readonly ICalculator _calculator;
         private ILogger _logger;
         private readonly IStore _store;
 
-        public CalculateBmiFunction()
+        public CalculateBMIFunction()
         {
             _calculator = new BodyMassIndexCalculator();
             _store = new DynamoDbStoreService();
@@ -35,7 +35,7 @@ namespace BMICalculator.Functions
             _store.StoreAsync(item);
         }
 
-        public CalculationResult FunctionHandler(InputData input, ILambdaContext context)
+        public Response FunctionHandler(InputData input, ILambdaContext context)
         {
             _logger = new CloudWatchLogger(context);
 
@@ -45,19 +45,17 @@ namespace BMICalculator.Functions
             {
                 _logger.LogError("Input data cannot be null.");
             }
-            else
-            {
-                _logger.LogMessage(JsonConvert.SerializeObject(input));
 
-                try
-                {
-                    result = _calculator.Calculate(input.Height, input.Weight, input.Age);
-                    SaveInformations(input, result);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex.Message);
-                }
+            _logger.LogMessage(JsonConvert.SerializeObject(input));
+
+            try
+            {
+                result = _calculator.Calculate(input.Height, input.Weight, input.Age);
+                SaveInformations(input, result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
             }
 
             result = result ?? new CalculationResult
@@ -67,15 +65,15 @@ namespace BMICalculator.Functions
 
             _logger.LogMessage($"Calculation result: {result.BMI} - {result.Description}");
 
-            //var response = new Response
-            //{
-            //    StatusCode = HttpStatusCode.OK,
-            //    Body = JsonConvert.SerializeObject(result)
-            //};
+            var response = new Response
+            {
+                StatusCode = HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(result)
+            };
 
-            //_logger.LogMessage($"Serialized response: {response.Body}");
+            _logger.LogMessage($"Serialized response: {response.Body}");
 
-            return result;
+            return response;
         }
     }
 }

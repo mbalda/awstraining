@@ -1,11 +1,11 @@
+using Amazon.Lambda.Core;
+using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
 using BMICalculator.Domain.Models;
 using BMICalculator.Infrastructure.Services;
-using Newtonsoft.Json;
 
-namespace BMICalculator.Functions
+namespace BMICalculator
 {
     public class GetCalculationsFunction
     {
@@ -17,7 +17,7 @@ namespace BMICalculator.Functions
             _store = new DynamoDbStoreService();
         }
 
-        public async Task<CalculationItem> FunctionHandler(string id, ILambdaContext context)
+        public async Task<Response> FunctionHandler(string id, ILambdaContext context)
         {
             _logger = new CloudWatchLogger(context);
 
@@ -25,7 +25,11 @@ namespace BMICalculator.Functions
             {
                 _logger.LogError("Item Id cannot be null or empty string.");
 
-                return null;
+                return new Response
+                {
+                    StatusCode = HttpStatusCode.BadGateway,
+                    Body = "'Message' : 'Input cannot be null.'"
+                };
             }
 
             var item = await _store.GetItemByIdAsync(id);
@@ -35,7 +39,11 @@ namespace BMICalculator.Functions
             else
                 _logger.LogError($"Object with Id: {item.Id} has not been found.");
 
-            return item;
+            return new Response
+            {
+                StatusCode = HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(item)
+            };
         }
     }
 }
