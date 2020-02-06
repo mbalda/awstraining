@@ -1,11 +1,12 @@
 using System;
 using System.Net;
+using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using BMICalculator.Domain.Models;
 using BMICalculator.Infrastructure.Services;
 using Newtonsoft.Json;
 
-namespace BMICalculator
+namespace BMICalculator.LambdaAndSaml.Functions
 {
     public class CalculateBMIFunction
     {
@@ -19,28 +20,14 @@ namespace BMICalculator
             _store = new DynamoDbStoreService();
         }
 
-        private void SaveInformations(InputData input, CalculationResult result)
-        {
-            CalculationItem item = new CalculationItem
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = input.Name,
-                Age = input.Age,
-                Height = input.Height,
-                Weight = input.Weight,
-                BMI = Math.Round(result.BMI, 2),
-                Description = result.Description.ToString()
-            };
-
-            _store.StoreAsync(item);
-        }
-
-        public Response FunctionHandler(InputData input, ILambdaContext context)
+        public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
         {
             _logger = new CloudWatchLogger(context);
 
             CalculationResult result = null;
 
+            InputData input = JsonConvert.DeserializeObject<InputData>(request.Body);
+            
             if (input == null)
             {
                 _logger.LogError("Input data cannot be null.");
@@ -65,15 +52,31 @@ namespace BMICalculator
 
             _logger.LogMessage($"Calculation result: {result.BMI} - {result.Description}");
 
-            var response = new Response
+            var response = new APIGatewayProxyResponse
             {
-                StatusCode = HttpStatusCode.OK,
+                StatusCode = (int)HttpStatusCode.OK,
                 Body = JsonConvert.SerializeObject(result)
             };
 
             _logger.LogMessage($"Serialized response: {response.Body}");
 
             return response;
+        }
+
+        private void SaveInformations(InputData input, CalculationResult result)
+        {
+            CalculationItem item = new CalculationItem
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = input.Name,
+                Age = input.Age,
+                Height = input.Height,
+                Weight = input.Weight,
+                BMI = Math.Round(result.BMI, 2),
+                Description = result.Description.ToString()
+            };
+
+            _store.StoreAsync(item);
         }
     }
 }

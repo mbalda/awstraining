@@ -1,11 +1,12 @@
-using Amazon.Lambda.Core;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using BMICalculator.Domain.Models;
+using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Lambda.Core;
 using BMICalculator.Infrastructure.Services;
+using Newtonsoft.Json;
 
-namespace BMICalculator
+namespace BMICalculator.LambdaAndSaml.Functions
 {
     public class GetCalculationsFunction
     {
@@ -17,32 +18,41 @@ namespace BMICalculator
             _store = new DynamoDbStoreService();
         }
 
-        public async Task<Response> FunctionHandler(string id, ILambdaContext context)
+        public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
         {
             _logger = new CloudWatchLogger(context);
 
-            if (string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(request.Body))
             {
                 _logger.LogError("Item Id cannot be null or empty string.");
 
-                return new Response
-                {
-                    StatusCode = HttpStatusCode.BadGateway,
-                    Body = "'Message' : 'Input cannot be null.'"
-                };
+                return CreateResponse(HttpStatusCode.BadRequest, "Item Id cannot be null or empty string.");
             }
+
+            var id = request.Body;
 
             var item = await _store.GetItemByIdAsync(id);
 
-            if (item != null)
-                _logger.LogMessage($"Object with Id: {item.Id} has been found.");
-            else
-                _logger.LogError($"Object with Id: {item.Id} has not been found.");
-
-            return new Response
+            if (item == null)
             {
-                StatusCode = HttpStatusCode.OK,
-                Body = JsonConvert.SerializeObject(item)
+                _logger.LogError($"Object with Id: {id} has not been found.");
+
+                return CreateResponse(HttpStatusCode.NotFound, $"Object with Id: {id} has not been found.");
+            }
+
+
+            _logger.LogMessage($"Object with Id: {item.Id} has been found.");
+
+            return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(item));
+        }
+
+        private static APIGatewayProxyResponse CreateResponse(HttpStatusCode code, string body)
+        {
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)code,
+                Body = body,
+                Headers = new Dictionary<string, string> { { "Content-Type", "text/plain" } }
             };
         }
     }

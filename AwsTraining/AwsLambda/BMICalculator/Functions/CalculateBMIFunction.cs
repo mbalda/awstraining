@@ -67,14 +67,6 @@ namespace BMICalculator.Functions
 
             _logger.LogMessage($"Calculation result: {result.BMI} - {result.Description}");
 
-            //var response = new Response
-            //{
-            //    StatusCode = HttpStatusCode.OK,
-            //    Body = JsonConvert.SerializeObject(result)
-            //};
-
-            //_logger.LogMessage($"Serialized response: {response.Body}");
-
             return result;
         }
     }
