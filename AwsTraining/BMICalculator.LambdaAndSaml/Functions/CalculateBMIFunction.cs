@@ -8,13 +8,13 @@ using Newtonsoft.Json;
 
 namespace BMICalculator.LambdaAndSaml.Functions
 {
-    public class CalculateBMIFunction
+    public class CalculateBmiFunction
     {
         private readonly ICalculator _calculator;
         private ILogger _logger;
         private readonly IStore _store;
 
-        public CalculateBMIFunction()
+        public CalculateBmiFunction()
         {
             _calculator = new BodyMassIndexCalculator();
             _store = new DynamoDbStoreService();

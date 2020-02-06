@@ -5,14 +5,14 @@
 
 	"Resources" : {
 
-		"Get" : {
+		"CalculateBmiFunction" : {
 			"Type" : "AWS::Serverless::Function",
 			"Properties": {
-				"Handler": "BMICalculator.LambdaAndSaml::BMICalculator.LambdaAndSaml.Functions::Get",
+				"Handler": "BMICalculator.LambdaAndSaml::BMICalculator.LambdaAndSaml.Functions.CalculateBmiFunction::FunctionHandler",
 				"Runtime": "dotnetcore2.1",
 				"CodeUri": "",
-				"MemorySize": 256,
-				"Timeout": 30,
+				"MemorySize": 128,
+				"Timeout": 20,
 				"Role": null,
 				"Policies": [ "AWSLambdaBasicExecutionRole" ],
 				"Events": {
@@ -20,7 +20,7 @@
 						"Type": "Api",
 						"Properties": {
 							"Path": "/",
-							"Method": "GET"
+							"Method": "POST"
 						}
 					}
 				}
