@@ -22,7 +22,7 @@ namespace BMICalculator.LambdaAndSaml.Functions
         {
             _logger = new CloudWatchLogger(context);
 
-            if (string.IsNullOrWhiteSpace(request.Body))
+            if (string.IsNullOrWhiteSpace(request.QueryStringParameters["Id"]))
             {
                 _logger.LogError("Item Id cannot be null or empty string.");
 

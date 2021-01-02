@@ -38,7 +38,7 @@ namespace BMICalculator.LambdaAndSaml.Functions
             try
             {
                 result = _calculator.Calculate(input.Height, input.Weight, input.Age);
-                SaveInformations(input, result);
+                result.Id = SaveInformations(input, result);
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace BMICalculator.LambdaAndSaml.Functions
             return response;
         }
 
-        private void SaveInformations(InputData input, CalculationResult result)
+        private string SaveInformations(InputData input, CalculationResult result)
         {
             CalculationItem item = new CalculationItem
             {
@@ -72,11 +72,13 @@ namespace BMICalculator.LambdaAndSaml.Functions
                 Age = input.Age,
                 Height = input.Height,
                 Weight = input.Weight,
-                BMI = Math.Round(result.BMI, 2),
+                BMI = result.BMI,
                 Description = result.Description.ToString()
             };
 
             _store.StoreAsync(item);
+
+            return item.Id;
         }
     }
 }

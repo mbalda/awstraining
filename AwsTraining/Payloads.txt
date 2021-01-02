@@ -1,0 +1,22 @@
+{
+  "name": "X",
+  "age": 30,
+  "Weight": 60,
+  "height": 160
+}
+
+{
+  "name": "Marcin",
+  "age": 35,
+  "Weight": 90,
+  "height": 180
+}
+
+
+
+{
+  "name": "Jan",
+  "age": 55,
+  "Weight": 75,
+  "height": 190
+}

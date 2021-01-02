@@ -12,6 +12,8 @@ namespace BMICalculator.Infrastructure.Services
 
             var bmi = mass / Math.Pow(height / 100d, 2);
 
+            bmi = Math.Round(bmi, 2);
+
             return new CalculationResult
             {
                 BMI = bmi,

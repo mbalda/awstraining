@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F17F5254-2BEC-4B8A-B2E8-9F552C79D8A6}"
 	ProjectSection(SolutionItems) = preProject
 		Scripts\helloWorld.py = Scripts\helloWorld.py
+		Payloads.txt = Payloads.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMICalculator.Infrastructure", "BMICalculator.Infrastructure\BMICalculator.Infrastructure.csproj", "{4AB0F572-559A-4E26-A717-DB2121731146}"

@@ -5,6 +5,17 @@
 
 	"Resources" : {
 
+		"calculationsDynamoDB" : {
+			"Type" : "AWS::Serverless::SimpleTable",
+			"Properties" : {
+				"TableName" : "calculations",
+				"PrimaryKey" : {
+					"Name" : "Id",
+					"Type" : "String"
+				}
+			}
+		},
+
 		"CalculateBmiFunction" : {
 			"Type" : "AWS::Serverless::Function",
 			"Properties": {
@@ -14,19 +25,40 @@
 				"MemorySize": 128,
 				"Timeout": 20,
 				"Role": null,
-				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Policies": [ "AWSLambdaFullAccess" ],
 				"Events": {
 					"RootGet": {
 						"Type": "Api",
 						"Properties": {
-							"Path": "/",
+							"Path": "/api/calculation",
 							"Method": "POST"
 						}
 					}
 				}
 			}
-		}
+		},
 
+		"GetCalculationsFunction" : {
+			"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "BMICalculator.LambdaAndSaml::BMICalculator.LambdaAndSaml.Functions.GetCalculationsFunction::FunctionHandler",
+				"Runtime": "dotnetcore2.1",
+				"CodeUri": "",
+				"MemorySize": 1024,
+				"Timeout": 10,
+				"Role": null,
+				"Policies": [ "AWSLambdaFullAccess" ],
+				"Events": {
+					"RootGet": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/api/calculation",
+							"Method": "GET"
+						}
+					}
+				}
+			}
+		}
 	},
 
 	"Outputs" : {
